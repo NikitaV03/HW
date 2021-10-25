@@ -5,6 +5,7 @@ int minelements(int* array, int n);
 double sredarifm(int massiv[], int n);
 void swapbyaverage(int massiv[], int n, double average);
 int countallnumbers100(int* array, int n);
+void sortme(int* array, int n);
 
 int main()
 {
@@ -15,9 +16,9 @@ int main()
 	std::cout << "Input number of elements in random array: ";
 	std::cin >> n;
 	int* array= new int[n];
-	randomarray(array, n);
-	minelements(array,n);
-	int average = sredarifm(array, n);
+	randomarray(array, n);//create an array
+	minelements(array,n);//find min elements
+	int average = sredarifm(array, n);//find average
 	std::cout << "average = " << average << std::endl;
 	swapbyaverage(array, n, average);
 	for (int i = 0; i < n; ++i) {
@@ -111,4 +112,4 @@ int countallnumbers100(int* array, int n) {
 	number = ind + 1;
 	return number;
 }
-	
+
