@@ -162,13 +162,14 @@ void spiralsnake(int** arr, size_t n, size_t m) {
                     ++iters;
                 }
             }
+            if (iters == 1) {
+                direction = 0;
+            }
             if (y == m) {
                 y--;
                 direction = 2;
             }
-            if (iters == 1) {
-                direction = 0;
-            }
+
         case 2:
             iters = 0;
             x++;
@@ -184,13 +185,14 @@ void spiralsnake(int** arr, size_t n, size_t m) {
                     ++iters;
                 }
             }
+            if (iters == 1) {
+                direction = 0;
+            }
             if (x == n) {
                 --x;
                 direction = 3;
             }
-            if (iters == 1) {
-                direction = 0;
-            }
+
         case 3:
             --y;
             iters = 0;
@@ -207,13 +209,14 @@ void spiralsnake(int** arr, size_t n, size_t m) {
 
                 }
             }
+            if (iters == 1) {
+                direction = 0;
+            }
             if (y == -1) {
                 ++y;
                 direction = 4;
             }
-            if (iters == 1) {
-                direction = 0;
-            }
+
         case 4:
             x--;
             iters = 0;
