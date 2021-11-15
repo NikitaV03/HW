@@ -239,25 +239,51 @@ void spiralsnake(int** arr, size_t n, size_t m) {
     }
 }
 
+void constarray(int** arr, int n, int m, int constant) {
+    for (int i=0;i<n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            arr[i][j] = constant;
+        }
+    }
+}
+
+bool testarray(int** arr, int n, int m) {
+    bool test = false;
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            if ((arr[i][j] <= 0) || (arr[i][j] > n * m)) {
+                return false;
+            }
+            if (arr[i][j] == n * m) {
+                test = true;
+            }
+        }
+    }
+    return test;
+}
+
 
 int main()
 {
-    int rows, cols;
-    std::cout << " Input rows : ";
-    std::cin >> rows;
-    std::cout << " Input columns : ";
-    std::cin >> cols;
-    
+    int rows = 0, cols = 0;
+    while ((rows <= 0) || (cols <= 0)) {
+        std::cout << " Input rows : ";
+        std::cin >> rows;
+        std::cout << " Input columns : ";
+        std::cin >> cols;
+    }
     int** arr = createzeroarray(rows, cols);
     std::cout << " Diagonal snake array: " << std::endl;
     diagonalsnake(arr, rows, cols);
     printnicearray(arr, rows, cols);
+    std::cout << (testarray(arr, rows, cols) ? "general test passed" : "general test failed") << std::endl << std::endl;
     deletearray(arr, rows);
 
     int** arr2 = createzeroarray(rows, cols);
     std::cout << " Spiral snake array: " << std::endl;
     spiralsnake(arr2, rows, cols);
     printnicearray(arr2, rows, cols);
+    std::cout << (testarray(arr2, rows, cols) ? "general test passed" : "general test failed") << std::endl << std::endl;
     deletearray(arr2, rows);
 
 
@@ -265,8 +291,14 @@ int main()
     std::cout << " Horizontal snake array: " << std::endl;
     horizontalsnake(arr3, rows, cols);
     printnicearray(arr3, rows, cols);
+    std::cout << (testarray(arr3, rows, cols) ? "general test passed": "general test failed") << std::endl << std::endl;
     deletearray(arr3, rows);
-    
+
+    int** arr4 = createzeroarray(rows, cols);
+    std::cout << " Constants array: " << std::endl;
+    constarray(arr4, rows, cols, 5);
+    printnicearray(arr4, rows, cols);
+    deletearray(arr4, rows);
 
     return 0;
 }
