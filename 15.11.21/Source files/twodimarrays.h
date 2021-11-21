@@ -1,6 +1,7 @@
 #pragma once
 #include<string>
-template<typename T>
+
+template<typename T> //1
 T** createarraypls(size_t rows, size_t cols) {
     T** arr = new T* [rows];
     for (int k = 0; k < rows; ++k) {
@@ -9,7 +10,15 @@ T** createarraypls(size_t rows, size_t cols) {
     return arr;
 }
 
-template<typename T>
+template<class T> //2
+void deletearray(T** a, size_t n) {
+    for (int i = 0; i < n; ++i) {
+        delete[] a[i];
+    }
+    delete[] a;
+}
+
+template<typename T> //3
 void constarray(T** arr, int n, int m, T constant) {
     for (int i = 0; i < n; ++i) {
         for (int j = 0; j < m; ++j) {
@@ -18,7 +27,7 @@ void constarray(T** arr, int n, int m, T constant) {
     }
 }
 
-template<typename T>
+template<typename T> //4
 void onesarray(T** arr, int n, int m) {
     for (int i = 0; i < n; ++i) {
         for (int j = 0; j < m; ++j) {
@@ -28,14 +37,29 @@ void onesarray(T** arr, int n, int m) {
     }
 }
 
-template<typename T>
-void transponmatrix(T** matrix, int n, int m) {
+template<typename T> //5
+T** transponmatrix(T** matrix, int n, int m) {
+    T** matrix2 = createarraypls<T>(m, n);
     for (int i = 0; i < n; ++i)
         for (int j = 0; j < m; ++j) {
-            tmp = matrix[i * 4 + j];
-            matrix[i * 4 + j] = matrix[j * 4 + i];
-            matrix[j * 4 + i] = tmp;
+            matrix2[j][i] = matrix[i][j];
         }
+    return matrix2;
+}
+
+template<typename T> // 6
+void perevorot(T** matrix, size_t n, size_t m) {
+    for (int i = 0; i < n/2; ++i)
+        for (int j = 0; j < m; ++j) {
+            T tmp = matrix[i][j];
+            matrix[i][j] = matrix[n-i-1][m-j-1];
+            matrix[n - i - 1][m - j - 1] = tmp;
+        }
+    if (n % 2 == 1) for (int j = 0; j <= m/2 + 1; ++j) {
+        T tmp = matrix[n/2][j];
+        matrix[n/2][j] = matrix[n/2][m - j - 1];
+        matrix[n / 2][m - j - 1] = tmp;
+    }
 }
 
 template<typename T>
@@ -64,10 +88,17 @@ void printnicearray(T* a[], size_t n, size_t m, size_t symb = 4) {
     std::cout << std::endl;
 }
 
-template<class T>
-void deletearray(T** a, size_t n) {
-    for (int i = 0; i < n; ++i) {
-        delete[] a[i];
-    }
-    delete[] a;
+template<typename T>
+void test(size_t rows, size_t cols, T yoursymb = 1) {
+    T** arr = createarraypls<T>(rows, cols);
+    constarray<T>(arr, rows, cols, yoursymb);
+    printarray<T>(arr, rows, cols);
+    onesarray<T>(arr, rows, cols);
+    printnicearray<T>(arr, rows, cols, 3);
+    T** b = transponmatrix<T>(arr, rows, cols);
+    printnicearray<T>(b, cols, rows, 3);
+    perevorot<T>(arr, rows, cols);
+    printnicearray<T>(arr, rows, cols, 3);
+    deletearray<T>(arr, rows);
+    deletearray<T>(b, cols);
 }
