@@ -84,8 +84,8 @@ T** newmultiplybynum(T** matrix, int n, int m, int num) {
 
 template<typename T> //9
 T** newaddtwomatrix(T** matrix1, int n1, int m1, T** matrix2) {
-    int** c;
-    c = createarraypls<int>(n1, m1);
+    T** c;
+    c = createarraypls<T>(n1, m1);
     for (int i = 0; i < n1; ++i) {
         for (int j = 0; j < m1; ++j) {
             c[i][j] = matrix1[i][j] + matrix2[i][j];
@@ -117,7 +117,7 @@ T** multiplytwomatrix(T** matrix1, int n1, int m1, T** matrix2, int n2, int m2) 
 
 template<typename T> //11
 void replacerowscols(T** matrix, int n, int m, size_t r1, size_t r2, bool isrows = 1) {
-    int tmp;
+    T tmp;
     if (isrows) {
         for (int j = 0; j < m; ++j) {
             tmp = matrix[r1][j];
@@ -203,4 +203,3 @@ void test(size_t rows, size_t cols, T yoursymb = 1) {
     deletearray<T>(d, rows);
     deletearray<T>(e, rows);
 }
-
