@@ -1,10 +1,8 @@
-
 #include <iostream>
 #include "twodimarrays.h"
 #include <cmath>
-
 int gaussmatrix(double** matrix, int n) {
-    int countswaps = 1;
+    int countswaps = 0;
     for (int i = 0; i < n; ++i) {
         int maxint = i;
         for (int j = i; j < n; ++j) {
@@ -15,10 +13,12 @@ int gaussmatrix(double** matrix, int n) {
         if (abs(matrix[maxint][i]) <= 0.00000001) {
             continue;
         }
-        for (int k = i; k < n; ++k) {
+        for (int k = 0; k < n; ++k) {
             std::swap(matrix[maxint][k], matrix[i][k]);
         }
-        countswaps++;
+        if (maxint != i) {
+            countswaps++;
+        }
         for (int j = i + 1; j < n; ++j)
         {
             double q = -matrix[j][i] / matrix[i][i];
@@ -27,7 +27,7 @@ int gaussmatrix(double** matrix, int n) {
             }
         }
     }
-    return (countswaps%2==1) ? 1 :-1;
+    return (countswaps%2==0) ? 1 :-1;
 }
 
 double gaussdeterminant(double** matrix, int n) {
@@ -79,15 +79,15 @@ int main()
     }
 
     printnicearray<double>(arr, rows, cols, 10);
-    gaussmatrix(arr, rows);
-    std::cout << "determinant is:    " << gaussdeterminant(arr, rows) << std::endl;
+    int ct1 = gaussmatrix(arr, rows);
+    std::cout << "determinant is:    " << ct1 * gaussdeterminant(arr, rows) << std::endl;
     printnicearray<double>(arr, rows, cols, 20);
     printnicearray<double>(arr2, 5, 5, 10);
-    gaussmatrix(arr2, 5);
-    std::cout << "determinant is:    " << gaussdeterminant(arr2, 5) << std::endl;
+    int ct2 = gaussmatrix(arr2, 5);
+    std::cout << "determinant is:    " << ct2 * gaussdeterminant(arr2, 5) << std::endl;
     printnicearray<double>(arr2, 5, 5, 20);
     printnicearray<double>(arr3, 4, 4, 10);
-    gaussmatrix(arr3, 4);
-    std::cout << "determinant is:    " << gaussdeterminant(arr3, 4) << std::endl;
+    int ct3 =  gaussmatrix(arr3, 4);
+    std::cout << "determinant is:    " << ct3 * gaussdeterminant(arr3, 4) << std::endl;
     printnicearray<double>(arr3, 4, 4, 20);
 }
