@@ -3,6 +3,7 @@
 #include "twodimarrays.h"
 #include <cmath>
 
+// НЕ РАБОТАЕТ :((((((((((((
 int gaussmatrix(double** matrix, int n) {
     int countswaps = 1;
     for (int i = 0; i < n; ++i) {
