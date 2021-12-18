@@ -56,29 +56,13 @@ int **createb() {
     b[0][0] = -1;
     return b;
 }
-int** createmap(int** a, size_t n, size_t m, size_t ny = 0, size_t mx = 0, int **b = createb(),int constant = -1) {
-    if (b[0][0] == -1) {
+int** createmap(int** a, size_t n, size_t m, size_t ny = 0, size_t mx = 0, int **b = nullptr,int constant = -1) {
+    if (b == nullptr) {
         int** b = createarraypls<int>(n,m);
         zeroarray(b, n, m);
         b[ny][mx] = 1;
         constant = a[ny][mx];
-        if ((ny > 0) && (b[ny - 1][mx] == 0) && (constant+1 >= a[ny - 1][mx])) {
-            b[ny - 1][mx] = 1;
-            createmap(a, n, m, ny - 1, mx, b, constant);
-        }
-        if ((mx > 0) && (b[ny][mx-1] == 0) && (constant + 1 >= a[ny][mx-1])) {
-            b[ny][mx - 1] = 1;
-            createmap(a, n, m, ny, mx - 1, b, constant);
-        }
-        if ((ny < n-1) && (b[ny + 1][mx] == 0) && (constant + 1 >= a[ny + 1][mx])) {
-            b[ny+1][mx] = 1;
-            createmap(a, n, m, ny + 1, mx, b, constant);
-        }
-        if ((mx < m - 1) && (b[ny][mx+1] == 0) && (constant + 1 >= a[ny][mx+1])) {
-            b[ny][mx+1] = 1;
-            createmap(a, n, m, ny, mx + 1, b, constant);
-        }
-        //printnicearray(b, n, m);
+        createmap(a, n, m, ny, mx, b, constant);
         return b;
     }
     else {
@@ -138,26 +122,29 @@ int arraystxt(int** a, size_t n, size_t m, size_t steps, size_t ny = 0, size_t m
         }
         outFile << std::endl;
     }
+    outFile << ny <<" " <<mx;
     outFile.close();
 }
 
 int main()
 {
     int n=-1, m=-1, ny=-1, mx=-1, steps=-1;
-    while ((ny < 0) || (mx < 0) || (ny >= n) || (mx >= m) || (steps < 0)) {
+    while ((ny <= 0) || (mx <= 0) || (ny > n) || (mx > m) || (steps < 0)) {
         std::cout << "Input area (n, m): " << std::endl;
         std::cin >> n >> m;
-        std::cout << "Input coord of crane (y, x): " << std::endl;
+        std::cout << "Input coord of crane (y,x > 0): " << std::endl;
         std::cin >> ny >> mx;
         std::cout << "Input number of steps: " << std::endl;
         std::cin >> steps;
     }
     std::cout << std::endl;
+    ny--; mx--;
     int** terrain = createarraypls<int>(n, m);
     randomintarray(terrain, n, m, 10);
     std::cout << "Before flood: " << std::endl;
     printnicearray(terrain, n, m);
-    water(terrain, n, m, steps, ny, mx); //to get file instead write: arraystxt(terrain, n, m, steps, ny, mx);
+    //water(terrain, n, m, steps, ny, mx); //to get file instead write: arraystxt(terrain, n, m, steps, ny, mx);
+    arraystxt(terrain, n, m, steps, ny, mx);
     std::cout << "After flood: " << std::endl;
     printnicearray(terrain, n, m);
     deletearray<int>(terrain, n);
