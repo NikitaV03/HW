@@ -10,7 +10,7 @@ int gaussmatrix(double** matrix, int n) {
                 maxint = j;
             }
         }
-        if (abs(matrix[maxint][i]) <= 0.00000001) {
+        if (abs(matrix[maxint][i]) < 0.00000001) {
             continue;
         }
         for (int k = 0; k < n; ++k) {
@@ -27,7 +27,7 @@ int gaussmatrix(double** matrix, int n) {
             }
         }
     }
-    return (countswaps%2==0) ? 1 :-1;
+    return (countswaps % 2 == 0) ? 1 : -1;
 }
 
 double gaussdeterminant(double** matrix, int n) {
@@ -36,6 +36,26 @@ double gaussdeterminant(double** matrix, int n) {
         product *= matrix[i][i];
     }
     return product;
+}
+
+
+//1. проверка, что под диагональю числа меньше 0.00000001 (из-за неточности в вычислениях не можем проверять, что числа равны 0)
+bool gausstest(double** matrix, int n) {
+    bool isok = true;
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < i; ++j) {
+            if (matrix[i][j] > 0.00000001){
+                isok = false;
+            }
+        }
+    }
+    if (isok) {
+        std::cout << " only zeros under diagonal + " << std::endl;
+    }
+    else {
+        std::cout << " only zeros under diagonal - " << std::endl;
+    }
+    return isok;
 }
 
 int main()
@@ -80,14 +100,17 @@ int main()
 
     printnicearray<double>(arr, rows, cols, 10);
     int ct1 = gaussmatrix(arr, rows);
+    gausstest(arr, rows);
     std::cout << "determinant is:    " << ct1 * gaussdeterminant(arr, rows) << std::endl;
     printnicearray<double>(arr, rows, cols, 20);
     printnicearray<double>(arr2, 5, 5, 10);
     int ct2 = gaussmatrix(arr2, 5);
+    gausstest(arr2, 5);
     std::cout << "determinant is:    " << ct2 * gaussdeterminant(arr2, 5) << std::endl;
     printnicearray<double>(arr2, 5, 5, 20);
     printnicearray<double>(arr3, 4, 4, 10);
     int ct3 =  gaussmatrix(arr3, 4);
+    gausstest(arr3, 4);
     std::cout << "determinant is:    " << ct3 * gaussdeterminant(arr3, 4) << std::endl;
     printnicearray<double>(arr3, 4, 4, 20);
 }
