@@ -50,16 +50,17 @@ bool gausstest(double** matrix, int n) {
         }
     }
     if (isok) {
-        std::cout << " only zeros under diagonal + " << std::endl;
+        std::cout << " only zeros under diagonal: + " << std::endl;
     }
     else {
-        std::cout << " only zeros under diagonal - " << std::endl;
+        std::cout << " only zeros under diagonal: - " << std::endl;
     }
     return isok;
 }
 
 int main()
 {
+    //создаем и заполняем матрицы
     size_t rows, cols;
     std::cout << "number of rows&cols: " << std::endl;
     std::cin >> rows;
@@ -98,19 +99,26 @@ int main()
         }
     }
 
+    // проверяем на трех матрицах
+    std::cout << "before: " << std::endl;
     printnicearray<double>(arr, rows, cols, 10);
     int ct1 = gaussmatrix(arr, rows);
     gausstest(arr, rows);
-    std::cout << "determinant is:    " << ct1 * gaussdeterminant(arr, rows) << std::endl;
+    std::cout << "determinant: " << ct1 * gaussdeterminant(arr, rows) << std::endl;
+    std::cout << "after: " << std::endl;
     printnicearray<double>(arr, rows, cols, 20);
+    std::cout << "before: " << std::endl;
     printnicearray<double>(arr2, 5, 5, 10);
     int ct2 = gaussmatrix(arr2, 5);
     gausstest(arr2, 5);
-    std::cout << "determinant is:    " << ct2 * gaussdeterminant(arr2, 5) << std::endl;
+    std::cout << "determinant: " << ct2 * gaussdeterminant(arr2, 5) << std::endl;
+    std::cout << "after: " << std::endl;
     printnicearray<double>(arr2, 5, 5, 20);
+    std::cout << "before: " << std::endl;
     printnicearray<double>(arr3, 4, 4, 10);
     int ct3 =  gaussmatrix(arr3, 4);
     gausstest(arr3, 4);
-    std::cout << "determinant is:    " << ct3 * gaussdeterminant(arr3, 4) << std::endl;
+    std::cout << "determinant: " << ct3 * gaussdeterminant(arr3, 4) << std::endl;
+    std::cout << "after: " << std::endl;
     printnicearray<double>(arr3, 4, 4, 20);
 }
