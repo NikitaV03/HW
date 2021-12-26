@@ -44,7 +44,7 @@ bool gausstest(double** matrix, int n) {
     bool isok = true;
     for (int i = 0; i < n; ++i) {
         for (int j = 0; j < i; ++j) {
-            if (matrix[i][j] > 0.00000001){
+            if (abs(matrix[i][j]) > 0.00000001){
                 isok = false;
             }
         }
@@ -121,4 +121,7 @@ int main()
     std::cout << "determinant: " << ct3 * gaussdeterminant(arr3, 4) << std::endl;
     std::cout << "after: " << std::endl;
     printnicearray<double>(arr3, 4, 4, 20);
+    deletearray<double>(arr, rows);
+    deletearray<double>(arr2, 5);
+    deletearray<double>(arr3, 4);
 }
