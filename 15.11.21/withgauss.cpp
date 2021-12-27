@@ -121,7 +121,7 @@ int main()
     std::cout << "determinant: " << ct3 * gaussdeterminant(arr3, 4) << std::endl;
     std::cout << "after: " << std::endl;
     printnicearray<double>(arr3, 4, 4, 20);
-    deletearray<double>(arr, rows);
-    deletearray<double>(arr2, 5);
-    deletearray<double>(arr3, 4);
+    deletearray(arr, rows);
+    deletearray(arr2, 5);
+    deletearray(arr3, 4);
 }
